@@ -4,79 +4,69 @@
 #include <list>
 #include <SFML/Graphics.hpp>
 
-// -------------------------------------------------------------
-// Structure Particle
-// -------------------------------------------------------------
 struct Particle
 {
-	float lifetime;
-	float timeElapsed;
+	float lifetime;	   // durée de vie (sec)
+	float timeElapsed; // temps écoulé depuis création
 
-	sf::CircleShape shape;
+	float speed;			// vitesse
+	sf::Vector2f direction; // direction normalisée
 
-	sf::Vector2f direction;
-	float speed;
+	sf::CircleShape shape; // forme SFML
 
 	Particle(float life = 1.f)
-		: lifetime(life),
-		  timeElapsed(0.f),
-		  direction(0.f, 0.f),
-		  speed(0.f)
+		: lifetime(life), timeElapsed(0.f), speed(0.f), direction(0.f, 0.f), shape()
 	{
 	}
 };
 
-// -------------------------------------------------------------
-// Structure ParticleSystem
-// -------------------------------------------------------------
+
 struct ParticleSystem
 {
 	std::list<Particle> particles;
 
-	float spawnPeriod;
-	float spawnTimer;
+	// génération procédurale
+	float spawnPeriod; // période de création (sec)
+	float spawnTimer;  // chronomètre
 
-	float minLife;
-	float maxLife;
+	float minLife, maxLife; // durée de vie min / max des particules
 
-	float minSize;
-	float maxSize;
+	// rendu / spawn
+	sf::Vector2f origin;  // origine (centre d'émission)
+	float spawnRadius;	  // rayon de spawn
+	float particleRadius; // taille de base (mais on rend aléatoire ensuite)
 
-	float minSpeed;
-	float maxSpeed;
-
+	// bonus : vitesse / friction
+	float minSpeed, maxSpeed;
 	float frictionCoef;
 
-	sf::Vector2f origin;
-	float spawnRadius;
-
+	// durée et état du système
 	float systemLifetime;
 	float systemTimeElapsed;
-
 	bool isPlaying;
 };
 
-// -------------------------------------------------------------
-// Fonctions
-// -------------------------------------------------------------
 ParticleSystem CreateParticleSystem(
 	float period,
 	float minLife, float maxLife,
-	float minSize, float maxSize,
-	float minSpeed, float maxSpeed,
-	float frictionCoef,
-	float systemLifetime,
-	sf::Vector2f origin,
-	float spawnRadius);
+	sf::Vector2f origin = sf::Vector2f(400.f, 300.f),
+	float spawnRadius = 100.f,
+	float particleRadius = 4.f,
+	float minSpeed = 50.f, float maxSpeed = 150.f,
+	float frictionCoef = 0.2f,
+	float systemLifetime = 2.0f);
 
 void AddParticleToSystem(ParticleSystem &system, float life);
+void Explode(ParticleSystem &system);
 
 void UpdateParticleSystem(ParticleSystem &system, float deltaTime);
+void ClearParticleSystem(ParticleSystem &system);
 
 void PlayParticleSystem(ParticleSystem &system);
 bool IsParticleSystemPlaying(const ParticleSystem &system);
 
+void DrawParticleSystem(ParticleSystem &system, sf::RenderWindow &window);
 void ClearParticleSystem(ParticleSystem &system);
 void DrawParticleSystem(ParticleSystem &system, sf::RenderWindow &window);
-
-#endif
+void Explode(ParticleSystem &system);
+#endif // PARTICLE_SYSTEM_H
