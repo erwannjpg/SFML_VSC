@@ -55,7 +55,7 @@ int main()
 				5.f,		  // particleRadius (base)
 				100.f, 300.f, // minSpeed, maxSpeed (rapide pour grande portée)
 				0.12f,		  // frictionCoef (léger)
-				10.f		  // systemLifetime
+				5.f		  // systemLifetime
 			);
 
 			PlayParticleSystem(ps);

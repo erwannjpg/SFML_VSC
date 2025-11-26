@@ -23,7 +23,7 @@ struct Particle
 
 struct ParticleSystem
 {
-	std::list<Particle> particles;
+	std::list<Particle*> particles;
 
 	// génération procédurale
 	float spawnPeriod; // période de création (sec)
