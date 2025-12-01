@@ -13,9 +13,6 @@
 int main()
 {
 	srand(static_cast<unsigned>(time(nullptr)));
-
-
-	// ---- SFML window
 	sf::RenderWindow window(sf::VideoMode(1000, 800), "Feu d'artifice - Exo complet");
 	window.setFramerateLimit(60);
 
