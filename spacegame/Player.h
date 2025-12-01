@@ -1,12 +1,12 @@
-#ifndef PADEL_H
-#define PADEL_H
+#ifndef Player_H
+#define Player_H
 
 #include <SFML/Graphics.hpp>
 
-class PLayer
+class Player
 {
 public:
-	PLayer(int, int);
+	Player(int, int);
 	void render(sf::RenderWindow &window);
 	void move(int direction);
 	sf::FloatRect getBounds() const;
